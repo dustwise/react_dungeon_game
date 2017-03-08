@@ -5,7 +5,7 @@ export default function Hero(props){
         <div>
             <h3>Health: {props.health}</h3>
             <p>DMG: {props.damage}</p>
-            <button onClick={() => props.heroUsePotion()}> Potions: ({props.potions})</button>
+            <button onClick={props.heroUsePotion}> Potions: ({props.potions})</button>
         </div>
     );
 }

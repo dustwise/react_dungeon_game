@@ -10,7 +10,7 @@ export default class Gameboard extends React.Component{
     this.state = {
       floor: 1,
       hero : {
-        health: 100,
+        health: 65,
         damage: 20,
         potions: 3
       }
@@ -40,6 +40,17 @@ export default class Gameboard extends React.Component{
     this.heroUsePotion = this.heroUsePotion.bind(this);
   }
 
+  generateEnemies(num) {
+    const newEnemies = [];
+    for (let i=1; i <= num; i++) {
+      let enemyInfo = this.enemies[Math.floor(Math.random()*this.enemies.length)];
+      let enemy = <Enemy enemyInfo={enemyInfo} key = {i}/>;
+      newEnemies.push(enemy);
+    }
+    return newEnemies;
+
+  }
+
   heroUsePotion(){
     if(this.state.hero.potions === 0 || this.state.hero.health === 100){
       console.log("You dont have any potions or don't need one!");
@@ -63,10 +74,10 @@ export default class Gameboard extends React.Component{
   render(){
     return (
       <div>
-        <h1>Woodby the Hero</h1> 
+        <h1>Woodby the Hero</h1>
         <div className='layout'>
           <Hero health={this.state.hero.health} damage={this.state.hero.damage} potions={this.state.hero.potions} heroUsePotion={this.heroUsePotion}/>
-          <Enemy enemyInfo={this.enemies[0]}/>
+          {this.generateEnemies(2)}
         </div>
       </div>
     );
