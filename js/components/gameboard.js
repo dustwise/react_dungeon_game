@@ -16,39 +16,7 @@ export default class Gameboard extends React.Component{
       }
     };
 
-    this.enemies = [
-      {
-        name: "Goblin",
-        health: 50,
-        damage: 15,
-        attackSpeed: 2000
-      },
-      {
-        name: "Troll",
-        health: 100,
-        damage: 25,
-        attackSpeed: 4000
-      },
-      {
-        name: "Ogre",
-        health: 200,
-        damage: 40,
-        attackSpeed: 8000
-      },
-    ];
-
     this.heroUsePotion = this.heroUsePotion.bind(this);
-  }
-
-  generateEnemies(num) {
-    const newEnemies = [];
-    for (let i=1; i <= num; i++) {
-      let enemyInfo = this.enemies[Math.floor(Math.random()*this.enemies.length)];
-      let enemy = <Enemy enemyInfo={enemyInfo} key = {i}/>;
-      newEnemies.push(enemy);
-    }
-    return newEnemies;
-
   }
 
   heroUsePotion(){
@@ -77,7 +45,7 @@ export default class Gameboard extends React.Component{
         <h1>Woodby the Hero</h1>
         <div className='layout'>
           <Hero health={this.state.hero.health} damage={this.state.hero.damage} potions={this.state.hero.potions} heroUsePotion={this.heroUsePotion}/>
-          <Floor enemies={this.generateEnemies(3)}/>
+          <Floor numberOfEnemies={10} heroDamage={this.state.hero.damage}/>
         </div>
       </div>
     );
