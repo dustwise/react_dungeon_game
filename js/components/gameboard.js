@@ -18,15 +18,19 @@ export default class Gameboard extends React.Component{
   }
 
   heroUsePotion(){
-    if(this.state.hero.potions === 0){
-      console.log("You dont have any potions!");
+    if(this.state.hero.potions === 0 || this.state.hero.health === 100){
+      console.log("You dont have any potions or don't need one!");
       return;
     }
     const newHeroStats = {
-      health: this.state.hero.health,
+      health: this.state.hero.health += 20,
       damage: this.state.hero.damage,
       potions: this.state.hero.potions -= 1
     };
+
+    if(newHeroStats.health > 100){
+      newHeroStats.health = 100;
+    }
 
     this.setState({
       hero: newHeroStats
