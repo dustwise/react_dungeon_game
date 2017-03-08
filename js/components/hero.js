@@ -1,11 +1,12 @@
 import React from 'react';
 
-export default function Hero(props){
-    return (
-        <div>
-            <h3>Health: {props.health}</h3>
-            <p>DMG: {props.damage}</p>
-            <button onClick={props.heroUsePotion}> Potions: ({props.potions})</button>
-        </div>
-    );
+export default function(props){
+  return (
+    <div>
+        <h3>Woodby the Hero</h3>
+        <p>HP: {props.heroStats.health}</p>
+        <p>AV: {props.heroStats.armor}</p>
+        <button onClick={props.heroActions.drinkPotion}>Drink Potion ({props.heroStats.potions})</button>
+    </div>
+  );
 }

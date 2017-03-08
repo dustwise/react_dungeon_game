@@ -8,45 +8,47 @@ export default class Gameboard extends React.Component{
     super();
 
     this.state = {
-      floor: 1,
-      hero : {
+      currentFloor: 1,
+      heroStats: {
         health: 65,
-        damage: 20,
+        armor: 5,
+        attackDamage: 15,
         potions: 3
       }
-    };
-
-    this.heroUsePotion = this.heroUsePotion.bind(this);
-  }
-
-  heroUsePotion(){
-    if(this.state.hero.potions === 0 || this.state.hero.health === 100){
-      console.log("You dont have any potions or don't need one!");
-      return;
-    }
-    const newHeroStats = {
-      health: this.state.hero.health += 20,
-      damage: this.state.hero.damage,
-      potions: this.state.hero.potions -= 1
-    };
-
-    if(newHeroStats.health > 100){
-      newHeroStats.health = 100;
     }
 
-    this.setState({
-      hero: newHeroStats
-    });
-  }
+    this.heroActions = {
+      drinkPotion: () => {
+        let newHealth = this.state.heroStats.health + 20;
+        const newStats = this.state.heroStats;
 
+        if(this.state.heroStats.potions <= 0 ){
+          console.log("You don't have enough potions!");
+          return;
+        }
+
+        if(this.state.heroStats.health === 100){
+          console.log("You're at full health, dummy!");
+          return;
+        }
+
+        if(newHealth > 100){
+          newHealth = 100;
+        }
+
+        newStats.health = newHealth;
+        newStats.potions = newStats.potions -= 1;
+        this.setState({heroStats: newStats});
+      }
+    }
+  }
   render(){
     return (
       <div>
-        <h1>Woodby the Hero</h1>
-        <div className='layout'>
-          <Hero health={this.state.hero.health} damage={this.state.hero.damage} potions={this.state.hero.potions} heroUsePotion={this.heroUsePotion}/>
-          <Floor numberOfEnemies={3} heroDamage={this.state.hero.damage}/>
-        </div>
+        <h1>Woodby's Adventure!</h1>
+        <Hero heroStats={this.state.heroStats} heroActions={this.heroActions}/>
+        <Floor />
+        <Enemy />
       </div>
     );
   }
