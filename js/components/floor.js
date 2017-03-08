@@ -30,7 +30,17 @@ export default class Floor extends React.Component {
     this.state = {
       currentEnemies: this.generateEnemies(this.props.numberOfEnemies)
     };
-    console.log(this.state.currentEnemies[2]);
+    this.removeSelf = this.removeSelf.bind(this);
+  }
+
+  removeSelf(id){
+    // console.log(this.state.currentEnemies);
+    // this.state.currentEnemies.forEach(enemy => {
+    //   if(enemy.id === id){
+    //     console.log("I found the " + enemy.name + " you were looking for! It's " + enemy.id + " number!")
+    //   }
+    // });
+    console.log(this);
   }
 
   generateEnemies(num) {
@@ -38,7 +48,7 @@ export default class Floor extends React.Component {
     for (let i=1; i <= num; i++) {
       let enemyInfo = this.enemies[Math.floor(Math.random()*this.enemies.length)];
       enemyInfo.id = i;
-      let enemy = <Enemy enemyInfo={enemyInfo} heroDamage={this.props.heroDamage} key = {i}/>;
+      let enemy = <Enemy enemyInfo={enemyInfo} heroDamage={this.props.heroDamage} removeSelf={this.removeSelf} key = {i}/>;
       newEnemies.push(enemy);
     }
     return newEnemies;
