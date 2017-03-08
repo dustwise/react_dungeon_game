@@ -1,6 +1,7 @@
 import React from 'react';
 import Floor from './floor';
 import Hero from './hero';
+import Enemy from './enemy';
 
 export default class Gameboard extends React.Component{
   constructor(){
@@ -14,6 +15,28 @@ export default class Gameboard extends React.Component{
         potions: 3
       }
     };
+
+    this.enemies = [
+      {
+        name: "Goblin",
+        health: 50,
+        damage: 15,
+        attackSpeed: 2000
+      },
+      {
+        name: "Troll",
+        health: 100,
+        damage: 25,
+        attackSpeed: 4000
+      },
+      {
+        name: "Ogre",
+        health: 200,
+        damage: 40,
+        attackSpeed: 8000
+      },
+    ];
+
     this.heroUsePotion = this.heroUsePotion.bind(this);
   }
 
@@ -43,6 +66,7 @@ export default class Gameboard extends React.Component{
         <h1>Woodby the Hero</h1> 
         <div className='layout'>
           <Hero health={this.state.hero.health} damage={this.state.hero.damage} potions={this.state.hero.potions} heroUsePotion={this.heroUsePotion}/>
+          <Enemy enemyInfo={this.enemies[0]}/>
         </div>
       </div>
     );
