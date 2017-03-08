@@ -77,7 +77,7 @@ export default class Gameboard extends React.Component{
         <h1>Woodby the Hero</h1>
         <div className='layout'>
           <Hero health={this.state.hero.health} damage={this.state.hero.damage} potions={this.state.hero.potions} heroUsePotion={this.heroUsePotion}/>
-          {this.generateEnemies(2)}
+          <Floor enemies={this.generateEnemies(3)}/>
         </div>
       </div>
     );
