@@ -45,6 +45,10 @@ export default class Gameboard extends React.Component{
     return generatedEnemies;
   }
 
+  generateFloor(currentFloor){
+
+  }
+
   componentDidMount(){
     this.setState({
       floorStats: {enemies: this.generateEnemies(3)}
