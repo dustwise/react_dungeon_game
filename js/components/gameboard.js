@@ -7,7 +7,7 @@ export default class Gameboard extends React.Component{
   constructor(){
     super();
     this.state = {
-      currentFloor: 1,
+      currentFloor: 11,
       floorStats : {
         enemies : []
       }
@@ -42,6 +42,7 @@ export default class Gameboard extends React.Component{
     const generatedEnemies = [];
     for(let i = 1; i <= numToGen; i++){
       generatedEnemies.push(this.enemyTemplates[Math.floor(Math.random() * this.enemyTemplates.length)]);
+      console.log(generatedEnemies);
     }
     return generatedEnemies;
   }
@@ -50,7 +51,7 @@ export default class Gameboard extends React.Component{
     let numOfEnemiesToGenerate;
     
     if(currentFloor <= 4){
-      numOfEnemiesToGenerate = this.randMinMaxNum(1, 3);
+      numOfEnemiesToGenerate = this.randMinMaxNum(1, 2);
     }else if(currentFloor <= 9){
       numOfEnemiesToGenerate = this.randMinMaxNum(2, 4);
     }else if(currentFloor === 10){
@@ -63,8 +64,12 @@ export default class Gameboard extends React.Component{
     });
   }
 
+  randMinMaxNum(min, max){
+    return Math.floor(Math.random()*(max-min+1)+min);
+  }
+
   componentDidMount(){
-    generateFloor(this.state.currentFloor)   
+    this.generateFloor(this.state.currentFloor)   
   }
  
   render(){
