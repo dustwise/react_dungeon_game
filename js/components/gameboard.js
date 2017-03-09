@@ -36,6 +36,24 @@ export default class Gameboard extends React.Component{
         attackSpeed: 8000
       }
     ];
+
+    this.enemyActions = {
+      takeDamage : (id) => {
+        const newState = Object.assign({}, this.state);
+        const enemyArray = newState.floorStats.enemies;
+
+        enemyArray.forEach((enemy, index) => {
+          if(enemy.id === id){
+            enemyArray[index].health -= 20;
+            if(enemyArray[index].health <= 0){
+              enemyArray.splice(index, 1);
+            }
+          }
+        });
+        
+        this.setState(newState);
+      }
+    }
   }
 
   generateEnemies(numToGen){
@@ -70,7 +88,7 @@ export default class Gameboard extends React.Component{
   }
 
   componentDidMount(){
-    this.generateFloor(this.state.currentFloor)   
+    this.generateFloor(this.state.currentFloor);   
   }
  
   render(){
@@ -78,7 +96,7 @@ export default class Gameboard extends React.Component{
       <div>
         <h1>Woodby's Adventure!</h1>
         <Hero />
-        <Floor floorStats={this.state.floorStats}/>
+        <Floor floorStats={this.state.floorStats} enemyActions={this.enemyActions}/>
       </div>
     );
   }
