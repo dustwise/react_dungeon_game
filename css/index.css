@@ -1,4 +1,11 @@
 .enemy{
   display: inline-block;
   border: 1px solid red;
+  height: 150px;
+}
+
+.animBar{
+  background-color: red;
+  width: 100%;
+  height: 100%;
 }

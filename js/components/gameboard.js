@@ -8,6 +8,12 @@ export default class Gameboard extends React.Component{
     super();
     this.state = {
       currentFloor: 11,
+      heroStats: {
+        maxHealth: 100,
+        health: 100,
+        armor: 5,
+        potions: 3
+      },
       floorStats : {
         enemies : []
       }
@@ -18,7 +24,7 @@ export default class Gameboard extends React.Component{
         name: 'Goblin',
         health: 50,
         baseArmor: 2,
-        attackDamage: 10,
+        attackDamage: 5,
         attackSpeed: 2000
       },
       {
@@ -52,8 +58,19 @@ export default class Gameboard extends React.Component{
         });
         
         this.setState(newState);
-      }
+      },
+      attack : function(id, dmg){
+        const newState = Object.assign({}, this.state);
+        newState.heroStats.health -= dmg;
+        if(newState.heroStats.health <= 0){
+          console.log("You dies!");
+        }
+        this.setState(newState);
+        console.log("You were attacked by unit " + id + " for " + dmg + " damage!");
+      } 
     }
+
+    this.enemyActions.attack = this.enemyActions.attack.bind(this);
   }
 
   generateEnemies(numToGen){
@@ -88,14 +105,14 @@ export default class Gameboard extends React.Component{
   }
 
   componentDidMount(){
-    this.generateFloor(this.state.currentFloor);   
+    this.generateFloor(this.state.currentFloor); 
   }
  
   render(){
     return (
       <div>
         <h1>Woodby's Adventure!</h1>
-        <Hero />
+        <Hero heroStats={this.state.heroStats}/>
         <Floor floorStats={this.state.floorStats} enemyActions={this.enemyActions}/>
       </div>
     );
