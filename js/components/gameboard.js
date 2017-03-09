@@ -7,7 +7,7 @@ export default class Gameboard extends React.Component{
   constructor(){
     super();
     this.state = {
-      currentFloor: 11,
+      currentFloor: 1,
       heroStats: {
         maxHealth: 100,
         health: 100,
@@ -56,21 +56,20 @@ export default class Gameboard extends React.Component{
             }
           }
         });
-        
-        this.setState(newState);
+        this.setState(newState)
+        this.checkBoard();
       },
       attack : function(id, dmg){
         const newState = Object.assign({}, this.state);
         newState.heroStats.health -= dmg;
-        if(newState.heroStats.health <= 0){
-          console.log("You dies!");
-        }
         this.setState(newState);
         console.log("You were attacked by unit " + id + " for " + dmg + " damage!");
-      } 
+        //this.checkBoard();
+      }     
     }
 
     this.enemyActions.attack = this.enemyActions.attack.bind(this);
+    this.generateFloor = this.generateFloor.bind(this);
   }
 
   generateEnemies(numToGen){
@@ -107,13 +106,37 @@ export default class Gameboard extends React.Component{
   componentDidMount(){
     this.generateFloor(this.state.currentFloor); 
   }
- 
+
+  checkBoard(){
+    if(this.state.floorStats.enemies.length === 0){
+      this.setState({currentFloor : this.state.currentFloor + 1});
+    }
+  }
+
   render(){
+    if(this.state.heroStats.health <= 0){
+      return (
+        <div>
+          <h1>YOU DEAD</h1>
+          <button>Play again!</button>
+        </div>
+      );
+    }
+
+    if(this.state.floorStats.enemies.length === 0){
+      return (
+        <div>
+          <h1>Well done!</h1>
+          <button onClick={this.generateFloor(this.state.currentFloor)}>Next Floor</button>
+        </div>
+      );
+    }
+
     return (
       <div>
         <h1>Woodby's Adventure!</h1>
         <Hero heroStats={this.state.heroStats}/>
-        <Floor floorStats={this.state.floorStats} enemyActions={this.enemyActions}/>
+        <Floor currentFloor={this.state.currentFloor} floorStats={this.state.floorStats} enemyActions={this.enemyActions}/>
       </div>
     );
   }
