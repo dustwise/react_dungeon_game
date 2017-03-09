@@ -1,7 +1,10 @@
 import React from 'react';
 
-export default function(){
+export default function(props){
   return (
-    <div><p>Enemy</p></div>
+    <div>
+      <h3>{props.name}</h3>
+      <p>{props.health}</p>
+    </div>
   );
 }
